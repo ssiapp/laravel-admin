@@ -596,6 +596,10 @@ class Filter implements Renderable
         if (in_array($method, $this->supports)) {
             $className = '\\Encore\\Admin\\Grid\\Filter\\'.ucfirst($method);
 
+            if (!isset($arguments[1])) {
+                $arguments[1] = column_comment($this->model->getTable(), $arguments[0]);
+            }
+
             return $this->addFilter(new $className(...$arguments));
         }
 

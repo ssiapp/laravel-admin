@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 
+use Ssiphp\Database\Models\TraitTree;
 /**
  * Class Menu.
  *
@@ -17,8 +18,8 @@ use Illuminate\Support\Facades\DB;
  */
 class Menu extends Model
 {
-    use AdminBuilder, ModelTree {
-        ModelTree::boot as treeBoot;
+    use AdminBuilder, TraitTree {
+        TraitTree::boot as treeBoot;
     }
 
     /**
@@ -42,6 +43,8 @@ class Menu extends Model
         $this->setTable(config('admin.database.menu_table'));
 
         parent::__construct($attributes);
+
+        $this->setTitleColumn('title');
     }
 
     /**

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\MessageBag;
 
+use Illuminate\Support\Facades\Config;
+
 if (!function_exists('admin_path')) {
 
     /**
@@ -167,5 +169,24 @@ if (!function_exists('array_delete')) {
                 unset($array[$index]);
             }
         }
+    }
+}
+
+
+if (!function_exists('column_comment')) {
+
+    /**
+     * 获取字段的注释.
+     *
+     * @param $table
+     * @param $column
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    function column_comment($table, $column)
+    {
+        if (!config('column_comments')) {
+            Config::set('column_comments',\Ssiphp\Utils\SsiDb::getAllColumnComment());
+        }
+        return config('column_comments.'.$table.'.'.$column);
     }
 }

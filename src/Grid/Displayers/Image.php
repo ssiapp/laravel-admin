@@ -14,6 +14,9 @@ class Image extends AbstractDisplayer
         }
 
         return collect((array) $this->value)->filter()->map(function ($path) use ($server, $width, $height) {
+
+            /*
+
             if (url()->isValidUrl($path) || strpos($path, 'data:image') === 0) {
                 $src = $path;
             } elseif ($server) {
@@ -21,6 +24,10 @@ class Image extends AbstractDisplayer
             } else {
                 $src = Storage::disk(config('admin.upload.disk'))->url($path);
             }
+
+            */
+
+            $src = upload_image_url($path,'',$server);
 
             return "<img src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img img-thumbnail' />";
         })->implode('&nbsp;');

@@ -292,7 +292,9 @@ class Grid
             $name = snake_case($relationName).'.'.$relationColumn;
         }
 
-        $column = $this->addColumn($name, $label);
+        //$column = $this->addColumn($name, $label);
+
+        $column = $this->addColumn($name, $label ? : column_comment($this->model()->getTable(), $name));
 
         if (isset($relation) && $relation instanceof Relations\Relation) {
             $this->model()->with($relationName);

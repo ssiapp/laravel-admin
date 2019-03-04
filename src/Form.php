@@ -1579,7 +1579,13 @@ class Form implements Renderable
         if ($className = static::findFieldClass($method)) {
             $column = array_get($arguments, 0, ''); //[0];
 
-            $element = new $className($column, array_slice($arguments, 1));
+            //$element = new $className($column, array_slice($arguments, 1));
+
+            if (isset($arguments[1])) {
+                $element = new $className($column, array_slice($arguments, 1));
+            }else{
+                $element = new $className($column, [column_comment($this->model()->getTable(), $column)]);
+            }
 
             $this->pushField($element);
 

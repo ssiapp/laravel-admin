@@ -282,19 +282,25 @@ class Grid
     {
         $relationName = $relationColumn = '';
 
+        $model = $this->model()->eloquent();
+
         if (strpos($name, '.') !== false) {
             list($relationName, $relationColumn) = explode('.', $name);
 
-            $relation = $this->model()->eloquent()->$relationName();
+            //$relation = $this->model()->eloquent()->$relationName();
 
-            $label = empty($label) ? ucfirst($relationColumn) : $label;
+            //$label = empty($label) ? ucfirst($relationColumn) : $label;
 
-            $name = snake_case($relationName).'.'.$relationColumn;
+            //$name = snake_case($relationName).'.'.$relationColumn;
+
+            if (method_exists($model, $relationName) && $model->$relationName() instanceof Relations\Relation) {
+                $relation = $model->$relationName();
+            }
         }
 
         //$column = $this->addColumn($name, $label);
 
-        $column = $this->addColumn($name, $label ? : column_comment($this->model()->getTable(), $name));
+        $column = $this->addColumn($name, $label ? : column_comment($name, $model));
 
         if (isset($relation) && $relation instanceof Relations\Relation) {
             $this->model()->with($relationName);

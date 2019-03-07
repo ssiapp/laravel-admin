@@ -1584,7 +1584,7 @@ class Form implements Renderable
             if (isset($arguments[1])) {
                 $element = new $className($column, array_slice($arguments, 1));
             }else{
-                $element = new $className($column, [column_comment($this->model()->getTable(), $column)]);
+                $element = new $className($column, [column_comment($column, $this->model())]);
             }
 
             $this->pushField($element);

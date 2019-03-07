@@ -177,6 +177,8 @@ class Show implements Renderable
      */
     protected function addField($name, $label = '')
     {
+        if (!$label)    $label = column_comment($name, $this->model);
+
         $field = new Field($name, $label);
 
         $field->setParent($this);

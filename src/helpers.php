@@ -178,15 +178,28 @@ if (!function_exists('column_comment')) {
     /**
      * 获取字段的注释.
      *
-     * @param $table
      * @param $column
+     * @param \Illuminate\Database\Eloquent\Model|null $model
      * @return \Illuminate\Config\Repository|mixed
      */
-    function column_comment($table, $column)
+    function column_comment($column, $model=null)
     {
         if (!config('column_comments')) {
             Config::set('column_comments',\Ssiphp\Utils\SsiDb::getAllColumnComment());
         }
-        return config('column_comments.'.$table.'.'.$column);
+
+        if (!$model instanceof \Illuminate\Database\Eloquent\Model) return config('column_comments.'.$column);
+
+        if (stripos($column,'.')) {
+            $arr = explode('.',$column); $first = $arr[0]; $second = $arr[1];
+            if (method_exists($model, $first) && $model->$first() instanceof Illuminate\Database\Eloquent\Relations\Relation) {
+                $tableName = $model->$first()->getRelated()->getTable();
+                return config('column_comments.'.$tableName.'.'.$second);
+            } else {
+                return config('column_comments.'.$column);
+            }
+        }
+
+        return config('column_comments.'.$model->getTable().'.'.$column);
     }
 }

@@ -4,6 +4,15 @@ namespace Encore\Admin\Controllers;
 
 use Encore\Admin\Layout\Content;
 
+/**
+ * ContentHeader
+ *
+ *
+ * @author      Ray
+ * @version     1.0
+ * @deprecated  since 190316
+ *
+ */
 trait ContentHeader
 {
     protected $content;

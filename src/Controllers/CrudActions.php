@@ -7,6 +7,15 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
+/**
+ * CrudActions
+ *
+ *
+ * @author      Ray
+ * @version     1.0
+ * @deprecated  since 190316
+ *
+ */
 trait CrudActions
 {
     use ContentHeader;
